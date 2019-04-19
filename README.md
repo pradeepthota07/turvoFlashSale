@@ -1,4 +1,4 @@
-# turvoFlashSale
+# TurvoFlashSaleAPI
 Flash Sale API Ecommerce
 
 ## Installation
