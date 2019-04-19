@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.turvo.flashsale.api.common.ResponseFormat;
 import com.turvo.flashsale.api.dto.FlashSaleUserDTO;
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("")
+@RequestScope
 public class FlashSaleUserController {
 
 	@Autowired
