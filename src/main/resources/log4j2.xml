@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+		</Console>
+
+		<RollingFile name="fileLogger" fileName="./logs/flashsale-logger.log"
+			filePattern="./logs/flashsale-logger-%d{-dd-MMMM-yyyy}.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="fileLogger" />
+		</Root>
+
+		<Logger name="com.turvo" level="debug" additivity="true">
+			<AppenderRef ref="fileLogger" level="debug" />
+		</Logger>
+	</Loggers>
+
+</Configuration>

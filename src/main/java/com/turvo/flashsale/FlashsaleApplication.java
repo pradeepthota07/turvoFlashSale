@@ -13,11 +13,10 @@ public class FlashsaleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FlashsaleApplication.class, args);
 	}
-	
+
 	@Bean
 	public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
-	    return jacksonObjectMapperBuilder -> 
-	        jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
+		return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
 	}
 
 }

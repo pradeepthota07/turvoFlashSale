@@ -11,9 +11,9 @@ public class FlashSalePurchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
-	
+
 	private String userId;
-	
+
 	private Integer inventoryId;
 
 	public Integer getId() {

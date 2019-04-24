@@ -5,28 +5,23 @@ import java.util.List;
 
 import com.turvo.flashsale.api.exception.ExceptionResponse;
 
-public class ResponseFormat<T> implements Serializable{
+public class ResponseFormat<T extends Serializable> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private final T data;
 
-	private T data;
-	
-	private List<ExceptionResponse> errors;
+	private final List<ExceptionResponse> errors;
+
+	public ResponseFormat(T data, List<ExceptionResponse> errors) {
+		this.data = data;
+		this.errors = errors;
+	}
 
 	public T getData() {
 		return data;
-	}
-
-	public void setData(T data) {
-		this.data = data;
 	}
 
 	public List<ExceptionResponse> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<ExceptionResponse> errors) {
-		this.errors = errors;
-	}
-	
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.turvo.flashsale.api.entity.FlashSaleUser;
 
 @Repository
-public interface FlashSaleUserRepository extends JpaRepository<FlashSaleUser, String>{
+public interface FlashSaleUserRepository extends JpaRepository<FlashSaleUser, String> {
 
 }

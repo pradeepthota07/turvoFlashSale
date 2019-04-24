@@ -7,7 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Check;
+
 @Entity
+@Check(constraints = "QUANTITY>=0")
 public class FlashSaleInventory {
 
 	@Id

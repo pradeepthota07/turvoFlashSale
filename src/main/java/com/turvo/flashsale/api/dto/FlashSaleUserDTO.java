@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class FlashSaleUserDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
 	private String userId;
 
 	private boolean isRegistered;
@@ -25,5 +23,4 @@ public class FlashSaleUserDTO implements Serializable {
 	public void setRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
-	
 }

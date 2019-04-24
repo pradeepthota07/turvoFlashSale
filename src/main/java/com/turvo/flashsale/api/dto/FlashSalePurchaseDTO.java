@@ -1,6 +1,8 @@
 package com.turvo.flashsale.api.dto;
 
-public class FlashSalePurchaseDTO {
+import java.io.Serializable;
+
+public class FlashSalePurchaseDTO implements Serializable {
 
 	private Integer id;
 

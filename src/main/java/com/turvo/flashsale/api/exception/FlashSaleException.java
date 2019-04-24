@@ -1,20 +1,36 @@
 package com.turvo.flashsale.api.exception;
 
-public class FlashSaleException extends Exception {
+import java.util.ArrayList;
+import java.util.List;
 
-	private static final long serialVersionUID = 1L;
+public class FlashSaleException extends RuntimeException {
 
-	private ExceptionResponse exceptionResponse;
+	private List<ExceptionResponse> exceptionResponses;
 
-	public FlashSaleException(String exception) {
-		super(exception);
+	public FlashSaleException(String message, List<ExceptionResponse> exceptionResponses) {
+		super(message);
+		this.exceptionResponses = exceptionResponses;
+	}
+
+	public FlashSaleException(List<ExceptionResponse> exceptionResponses) {
+		this.exceptionResponses = exceptionResponses;
 	}
 
 	public FlashSaleException(ExceptionResponse exceptionResponse) {
-		this.exceptionResponse = exceptionResponse;
+		this.exceptionResponses = new ArrayList<>();
+		this.exceptionResponses.add(exceptionResponse);
 	}
 
-	public ExceptionResponse getExceptionResponse() {
-		return exceptionResponse;
+	public List<ExceptionResponse> getExceptionResponses() {
+		return exceptionResponses;
+	}
+
+	public void addExceptionResponse(ExceptionResponse exceptionResponse) {
+		if (this.exceptionResponses == null || this.exceptionResponses.isEmpty()) {
+			this.exceptionResponses = new ArrayList<>();
+			this.exceptionResponses.add(exceptionResponse);
+		} else {
+			this.exceptionResponses.add(exceptionResponse);
+		}
 	}
 }
