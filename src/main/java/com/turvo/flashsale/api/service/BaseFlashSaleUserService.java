@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.turvo.flashsale.api.converter.FlashSaleUserConverter;
 import com.turvo.flashsale.api.dto.FlashSaleUserDTO;
 import com.turvo.flashsale.api.entity.FlashSaleUser;
+import com.turvo.flashsale.api.exception.ExceptionResponse;
+import com.turvo.flashsale.api.exception.ResourceNotFoundException;
 import com.turvo.flashsale.api.repository.FlashSaleUserRepository;
 
 @Service
@@ -61,6 +63,9 @@ public class BaseFlashSaleUserService implements FlashSaleUserService {
 
 			if (flashSaleUser.isPresent()) {
 				userDTO = FlashSaleUserConverter.convertEntityToDTO(flashSaleUser.get());
+			} else {
+				ExceptionResponse ex = new ExceptionResponse("FSI-001", "User not registered");
+				throw new ResourceNotFoundException(ex);
 			}
 		}
 

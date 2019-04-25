@@ -13,7 +13,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import com.turvo.flashsale.api.common.ResponseFormat;
 import com.turvo.flashsale.api.dto.FlashSalePurchaseDTO;
-import com.turvo.flashsale.api.exception.FlashSaleException;
 import com.turvo.flashsale.api.service.FlashSalePurchaseService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +25,7 @@ import io.swagger.annotations.ApiResponses;
 public class FlashSalePurchaseController {
 
 	private static final Logger LOGGER = LogManager.getLogger(FlashSalePurchaseController.class);
-	
+
 	@Autowired
 	private FlashSalePurchaseService flashSalePurchaseService;
 
@@ -39,22 +38,14 @@ public class FlashSalePurchaseController {
 			@RequestBody FlashSalePurchaseDTO flashSalePurchaseDTO) {
 
 		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSalePurchaseController.purchaseOrder");
-		
+
 		ResponseFormat<FlashSalePurchaseDTO> response = null;
 
-		if (flashSalePurchaseDTO != null) {
-			try {
-				flashSalePurchaseDTO = flashSalePurchaseService.purchaseOrder(flashSalePurchaseDTO);
-				response = new ResponseFormat<>(flashSalePurchaseDTO, null);
-			} catch (FlashSaleException e) {
-				LOGGER.error(e.getExceptionResponses());
-				response = new ResponseFormat<>(null, e.getExceptionResponses());
-				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-			}
-		}
+		flashSalePurchaseDTO = flashSalePurchaseService.purchaseOrder(flashSalePurchaseDTO);
+		response = new ResponseFormat<>(flashSalePurchaseDTO, null);
 
 		LOGGER.info("End com.turvo.flashsale.api.controller.FlashSalePurchaseController.purchaseOrder");
-		
+
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 

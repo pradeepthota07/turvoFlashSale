@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.turvo.flashsale.api.converter.FlashSaleInventoryConverter;
 import com.turvo.flashsale.api.dto.FlashSaleInventoryDTO;
 import com.turvo.flashsale.api.entity.FlashSaleInventory;
+import com.turvo.flashsale.api.exception.ExceptionResponse;
+import com.turvo.flashsale.api.exception.ResourceNotFoundException;
 import com.turvo.flashsale.api.repository.FlashSaleInventoryRepository;
 
 @Service
@@ -50,7 +52,7 @@ public class BaseFlashSaleInventoryService implements FlashSaleInventoryService 
 	public FlashSaleInventoryDTO getInventory(Integer inventoryId) {
 
 		LOGGER.info("Start com.turvo.flashsale.api.service.FlashSaleInventoryBaseService.getInventory");
-		
+
 		FlashSaleInventoryDTO inventoryDTO = null;
 
 		if (inventoryId > 0) {
@@ -58,12 +60,15 @@ public class BaseFlashSaleInventoryService implements FlashSaleInventoryService 
 
 			if (flashSaleInventory.isPresent()) {
 				inventoryDTO = FlashSaleInventoryConverter.convertEntityToDTO(flashSaleInventory.get());
+			} else {
+				ExceptionResponse ex = new ExceptionResponse("FSI-001", "Inventory not found");
+				throw new ResourceNotFoundException(ex);
 			}
 
 		}
-		
+
 		LOGGER.info("End com.turvo.flashsale.api.service.FlashSaleInventoryBaseService.getInventory");
-		
+
 		return inventoryDTO;
 	}
 }

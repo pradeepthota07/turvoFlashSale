@@ -1,6 +1,5 @@
 package com.turvo.flashsale.api.controller;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import com.turvo.flashsale.api.common.ResponseFormat;
 import com.turvo.flashsale.api.dto.FlashSaleInventoryDTO;
-import com.turvo.flashsale.api.exception.FlashSaleException;
 import com.turvo.flashsale.api.service.FlashSaleInventoryService;
 
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +25,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("")
 @RequestScope
 public class FlashSaleInventoryController {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(FlashSaleInventoryController.class);
 
 	@Autowired
@@ -42,18 +40,10 @@ public class FlashSaleInventoryController {
 			@RequestBody FlashSaleInventoryDTO inventoryDTO) {
 
 		LOGGER.info("Start com.turvo.flashsale.api.service.FlashSaleInventoryBaseService.addInventory");
-		
+
 		ResponseFormat<FlashSaleInventoryDTO> response = null;
-		try {
-			if (inventoryDTO != null) {
-				inventoryDTO = flashSaleInventoryService.saveInventory(inventoryDTO);
-				response = new ResponseFormat<>(inventoryDTO, null);
-			}
-		} catch (FlashSaleException e) {
-			LOGGER.log(Level.ERROR, e.getExceptionResponses());
-			response = new ResponseFormat<>(null, e.getExceptionResponses());
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-		}
+		inventoryDTO = flashSaleInventoryService.saveInventory(inventoryDTO);
+		response = new ResponseFormat<>(inventoryDTO, null);
 
 		LOGGER.info("End com.turvo.flashsale.api.service.FlashSaleInventoryBaseService.addInventory");
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -68,23 +58,17 @@ public class FlashSaleInventoryController {
 			@RequestBody FlashSaleInventoryDTO inventoryDTO) {
 
 		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleInventoryController.updateInventory");
-		
+
 		ResponseFormat<FlashSaleInventoryDTO> response = null;
-		try {
-			if (inventoryDTO != null && id != null) {
-				Integer inventoryId = Integer.parseInt(id);
-				inventoryDTO.setId(inventoryId);
-				inventoryDTO = flashSaleInventoryService.saveInventory(inventoryDTO);
-				response = new ResponseFormat<>(inventoryDTO, null);
-			}
-		} catch (FlashSaleException e) {
-			LOGGER.log(Level.ERROR, e.getExceptionResponses());
-			response = new ResponseFormat<>(null, e.getExceptionResponses());
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		if (inventoryDTO != null && id != null) {
+			Integer inventoryId = Integer.parseInt(id);
+			inventoryDTO.setId(inventoryId);
+			inventoryDTO = flashSaleInventoryService.saveInventory(inventoryDTO);
+			response = new ResponseFormat<>(inventoryDTO, null);
 		}
 
 		LOGGER.info("End com.turvo.flashsale.api.controller.FlashSaleInventoryController.updateInventory");
-		
+
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 

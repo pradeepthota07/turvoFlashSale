@@ -15,7 +15,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import com.turvo.flashsale.api.common.ResponseFormat;
 import com.turvo.flashsale.api.dto.FlashSaleUserDTO;
-import com.turvo.flashsale.api.exception.FlashSaleException;
 import com.turvo.flashsale.api.service.FlashSaleUserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
 public class FlashSaleUserController {
 
 	private static final Logger LOGGER = LogManager.getLogger(FlashSaleUserController.class);
-	
+
 	@Autowired
 	private FlashSaleUserService flashSaleUserService;
 
@@ -41,17 +40,15 @@ public class FlashSaleUserController {
 	public ResponseEntity<ResponseFormat<FlashSaleUserDTO>> registerUser(@RequestBody FlashSaleUserDTO userDTO) {
 
 		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleUserController.registerUser");
-		
+
 		ResponseFormat<FlashSaleUserDTO> response = null;
 
 		FlashSaleUserDTO flashSaleUserDTO = null;
 
-		if (userDTO.getUserId() != null) {
-			flashSaleUserDTO = flashSaleUserService.registerUser(userDTO);
-			response = new ResponseFormat<>(flashSaleUserDTO, null);
-		}
+		flashSaleUserDTO = flashSaleUserService.registerUser(userDTO);
+		response = new ResponseFormat<>(flashSaleUserDTO, null);
 		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleUserController.registerUser");
-		
+
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
@@ -61,25 +58,15 @@ public class FlashSaleUserController {
 			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
 	public ResponseEntity<ResponseFormat<FlashSaleUserDTO>> retrieveUser(@PathVariable String userId) {
-		
-		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleUserController.retrieveUser");
-		
-		ResponseFormat<FlashSaleUserDTO> response = null;
-		FlashSaleUserDTO flashSaleUserDTO = null;
-		
-		if (userId != null) {
-			try {
-				flashSaleUserDTO = flashSaleUserService.retrieveUser(userId);
-				response = new ResponseFormat<>(flashSaleUserDTO, null);
-			} catch (FlashSaleException e) {
-				LOGGER.error(e.getExceptionResponses());
-				response = new ResponseFormat<>(null, e.getExceptionResponses());
-				return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-			}
-		}
 
 		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleUserController.retrieveUser");
-		
+
+		ResponseFormat<FlashSaleUserDTO> response = null;
+		FlashSaleUserDTO flashSaleUserDTO = flashSaleUserService.retrieveUser(userId);
+		response = new ResponseFormat<>(flashSaleUserDTO, null);
+
+		LOGGER.info("Start com.turvo.flashsale.api.controller.FlashSaleUserController.retrieveUser");
+
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
