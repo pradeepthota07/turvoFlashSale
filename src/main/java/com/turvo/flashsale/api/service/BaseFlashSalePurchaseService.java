@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,7 @@ public class BaseFlashSalePurchaseService implements FlashSalePurchaseService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
 	public FlashSalePurchaseDTO purchaseOrder(FlashSalePurchaseDTO purchaseDTO) {
 		LOGGER.info("Start com.turvo.flashsale.api.service.FlashSalePurchaseBaseService.purchaseOrder");
 
